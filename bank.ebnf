@@ -1,0 +1,17 @@
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+
+letter = "A" | "B" | "C" | ... | "Z" | "a" | "b" | ... | "z" ;
+
+integer = digit, { digit } ;
+
+sign = "+" | "-" ;
+
+number = [sign], integer ;
+
+name = letter, { letter } ;
+
+account_number = letter, letter, digit, digit, digit, digit, digit, digit ;
+
+command = "deposit"  | "withdraw" | "balance" | "create" ;
+
+program = { command, account_number, number } ;
