@@ -8,7 +8,11 @@ sign = "+" | "-" ;
 
 number = [sign], integer ;
 
-name = letter, { letter } ;
+name = firstname , lastname
+
+first_name = letter,{letter};
+
+last_name = letter ,{letter};
 
 account_number = letter, letter, digit, digit, digit, digit, digit, digit ;
 
