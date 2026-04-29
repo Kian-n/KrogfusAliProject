@@ -8,14 +8,24 @@ sign = "+" | "-" ;
 
 number = [sign], integer ;
 
-name = firstname , lastname
+name = firstname , " ", lastname ;
 
-first_name = letter,{letter};
+first_name = letter, {letter} ;
 
-last_name = letter ,{letter};
+last_name = letter, {letter} ;
 
 account_number = letter, letter, digit, digit, digit, digit, digit, digit ;
 
-command = "deposit"  | "withdraw" | "balance" | "create" ;
+deposit_command = "deposit", " ", account_number, " ", number ;
 
-program = { command, account_number, number } ;
+withdraw_command = "withdraw", " ", account_number, " ", number ;
+
+balance_command = "balance", " ", account_number ;
+
+create_command = "create", " ", first_name, " ", last_name, " ", account_number ;
+
+command = deposit_command | withdraw_command | balance_command | create_command ;
+
+program = command, { newline, command } ;
+
+newline = "\n" ;
