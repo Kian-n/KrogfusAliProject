@@ -1,7 +1,3 @@
-#####################################
-# I/O section of main
-# Taite Krogfus, 04/28/2026 Final Project
-#####################################
 # I/O LOGIC TO BE ADDED TO MAIN CLASS
 # Taite Krogfus
 # 04/28/2026
