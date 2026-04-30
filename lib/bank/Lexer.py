@@ -8,7 +8,7 @@
 # defined token objects. This is the first step in processing DSL commands.
 # imports the Token class
 
-from Token import Token
+from lib.bank.Token import Token
 
 class Lexer:
     def __init__(self, text):

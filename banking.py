@@ -1,5 +1,5 @@
 # I/O LOGIC TO BE ADDED TO MAIN CLASS
-# Taite Krogfus
+# Taite Krogfus and Ibrahim Ali
 # 04/28/2026
 # Final Project
 # DESCRIPTION: Handles all input and output operations for the Banking program,
@@ -9,6 +9,13 @@
 # back to the file for persistent storage.
 
 import random
+
+# Imports our lib files to main
+from lib.bank.Lexer import Lexer
+from lib.bank.Parser import Parser
+from lib.bank.Evaluator import Evaluator
+from lib.BankAccount import BankAccount
+
 # var that stores the AccountCreation text file
 ACCOUNTS_FILE = "AccountCreation.txt"
 
@@ -104,3 +111,87 @@ def create_account(accounts):
 
     print("Account created successfully.")
     print("Account number:", account_number)
+
+# MAIN PROGRAM START
+
+def main():
+    # load the initial accounts
+    accounts = load_accounts(ACCOUNTS_FILE)
+
+    # Add evaluator which runs the DSL Commands
+    evaluator = Evaluator(accounts)
+
+    # Main Loop
+    running = True
+
+    while running:
+
+        # Displays the Main Menu
+        print("BANKING SYSTEM")
+        print("1. Log into an account")
+        print("2. Create a new account")
+        print("3. Display all accounts")
+        print("4. Exit program")
+
+        # Asks the user to choose a menu option
+        choice = input("Choose an option: ")
+
+        # Log into an existing account by Account Number
+        if choice == "1":
+            account_id = input("Enter account number: ").upper()
+
+            # Check if the account exists
+            if account_id in accounts:
+                account_session(accounts, evaluator, account_id)
+
+            # Lets the user know if account does not exist
+            else:
+                print("Sorry, The Account Listed does not exist in our Bank. Would you like to create one?")
+
+        # Create a new account
+        elif choice == "2":
+            create_account(accounts)
+
+        # Show all the accounts in the program
+        elif choice == "3":
+            display_accounts(accounts)
+
+        # Ends the Program
+        elif choice == "4":
+            print("Thank you for banking with us.")
+            running = False
+
+        else:
+            print("Invalid option. Please try again.")
+
+# DSL COMMANDS WHILE LOOP IS RUNNING
+def account_session(accounts, evaluator, account_id):
+    session_active = True
+
+    while session_active:
+        print(f"\n--- ACCOUNT {account_id} ---")
+        print("Available DSL commands:")
+        print("  deposit <account> <amount>")
+        print("  withdraw <account> <amount>")
+        print("  balance <account>")
+        print("  logout")
+
+        command = input("> ")
+
+        if command.lower() == "logout":
+            print("Logging out.")
+            session_active = False
+        else:
+            # run DSL command
+            lexer = Lexer(command)
+            tokens = lexer.tokenize()
+
+            parser = Parser(tokens)
+            ast = parser.parse()
+
+            evaluator.evaluate(ast)
+
+# RUN MAIN
+
+if __name__ == "__main__":
+    main()
