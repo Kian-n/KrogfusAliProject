@@ -169,7 +169,7 @@ def account_session(accounts, evaluator, account_id):
     session_active = True
 
     while session_active:
-        print(f"\n--- ACCOUNT {account_id} ---")
+        print(f"ACCOUNT {account_id}")
         print("Available DSL commands:")
         print("  deposit <account> <amount>")
         print("  withdraw <account> <amount>")
