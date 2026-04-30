@@ -1,4 +1,4 @@
-# I/O LOGIC TO BE ADDED TO MAIN CLASS
+# banking.py
 # Taite Krogfus and Ibrahim Ali
 # 04/28/2026
 # Final Project
