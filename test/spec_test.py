@@ -202,6 +202,21 @@ def main():
         else:
             print("Invalid option. Try again.")
 
+# PyCharm sometimes runs this file using its unittest runner,
+# which skips the normal main() call. This check detects that
+# case and forces the menu to run so the program works correctly.
+def launched_by_pycharm_unittest():
+    running_with_pycharm_unittest = False
 
-if __name__ == "__main__":
+    for arg in sys.argv:
+        if "_jb_unittest_runner.py" in arg:
+            running_with_pycharm_unittest = True
+
+    return running_with_pycharm_unittest
+
+
+if __name__ == "__main__" or launched_by_pycharm_unittest():
     main()
+
+    if launched_by_pycharm_unittest():
+        sys.exit(0)
