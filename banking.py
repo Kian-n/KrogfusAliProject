@@ -46,7 +46,7 @@ def load_accounts(filename):
 
 # Method to display the accounts
 def display_accounts(accounts):
-    print("\nAccounts:")
+    print("Accounts:")
 
     for account_number in accounts:
         account = accounts[account_number]
@@ -112,6 +112,41 @@ def create_account(accounts):
     print("Account created successfully.")
     print("Account number:", account_number)
 
+def admin_mode():
+    print("ADMIN MODE")
+
+
+    print("Type a DSL command to see tokens and AST.")
+    print("Please enter in this format: Command AccountNumber (Amount if needed)")
+    print("Enter 'exit' to return to the main menu.")
+
+    while True:
+        command = input("admin> ")
+
+        if command.lower() == "exit":
+            print("Exiting admin mode.")
+            break
+
+        try:
+            # Run lexer
+            lexer = Lexer(command)
+            tokens = lexer.tokenize()
+            print("TOKENS:", tokens)
+
+            # Run parser
+            parser = Parser(tokens)
+            ast = parser.parse()
+            print("AST:", ast)
+
+        except Exception as e:
+            print("ERROR:", e)
+            print("This DSL command is invalid.\n")
+            continue
+
+        print()  # blank line
+
+
+
 # MAIN PROGRAM START
 
 def main():
@@ -131,7 +166,8 @@ def main():
         print("1. Log into an account")
         print("2. Create a new account")
         print("3. Display all accounts")
-        print("4. Exit program")
+        print("4. Run as admin") # RUN WITH THE RESULTS OF LEXER AND PARSER
+        print("5. Exit program")
 
         # Asks the user to choose a menu option
         choice = input("Choose an option: ")
@@ -156,8 +192,11 @@ def main():
         elif choice == "3":
             display_accounts(accounts)
 
-        # Ends the Program
         elif choice == "4":
+            admin_mode()
+
+        # Ends the Program
+        elif choice == "5":
             print("Thank you for banking with us.")
             running = False
 
@@ -170,7 +209,10 @@ def account_session(accounts, evaluator, account_id):
 
     while session_active:
         print(f"ACCOUNT {account_id}")
+
         print("Available DSL commands:")
+        print("Please enter in this format: Command AccountNumber (Amount if needed)")
+
         print("  deposit <account> <amount>")
         print("  withdraw <account> <amount>")
         print("  balance <account>")
