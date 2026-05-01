@@ -1,19 +1,23 @@
-# ABSTRACT SYNTAX TREE (AST) CLASS
+# EVALUATOR CLASS
 # IBRAHIM ALI
 # 04/29/2026
 # Final Project
 # DESCRIPTION: The Evaluator reads the AST produced by the Parser and
 # does the banking command. It describes the deposit, withdraw, balance, and create commands.
-#Stores accounts using a dictionary which are directly mapped to our Bank Account Objects
+# Stores accounts using a dictionary which are directly mapped to our Bank Account Objects
 
 from lib.bank.ASTNode import ASTNode
+from lib.BankAccount import BankAccount
+
+# var to store AccountCreation.txt
+ACCOUNTS_FILE = "AccountCreation.txt"
 
 class Evaluator:
     def __init__(self, accounts):
-        #Accounts is the dictionary
+        # Accounts is the dictionary
         self.accounts = accounts
 
-    #Determines which command to run based on the AST root node
+    # Determines which command to run based on the AST root node
     def evaluate(self, ast):
         node_type = ast.get_node_type()
 
@@ -32,7 +36,6 @@ class Evaluator:
         else:
             print("Please enter either DEPOSIT or WITHDRAW or BALANCE or CREATE.")
 
-
     # DEPOSIT
     def eval_deposit(self, ast):
         # Deposit command
@@ -41,7 +44,7 @@ class Evaluator:
         acc = ast.get_children()[0].get_value()
         amt = ast.get_children()[1].get_value()
 
-        #Checks if the account does not exist and lets the user know
+        # Checks if the account does not exist and lets the user know
         if acc not in self.accounts:
             print("Account does not exist.")
             return
@@ -77,7 +80,6 @@ class Evaluator:
 
         print(f"Balance for {acc}: {self.accounts[acc].get_balance()}")
 
-
     # CREATE
     def eval_create(self, ast):
         # Deposit command
@@ -93,5 +95,11 @@ class Evaluator:
             print("The Account already exists.")
             return
 
-        self.accounts[acc] = 0
-        print(f"Created account {acc} for {first} {last} with balance 0.")
+        # create account object
+        self.accounts[acc] = BankAccount(first, last, acc, 0.00)
+
+        # write to file
+        with open(ACCOUNTS_FILE, "a") as file:
+            file.write(f"{first} {last} {acc}\n")
+
+        print(f"Created account {acc} for {first} {last} with balance 0.00")
