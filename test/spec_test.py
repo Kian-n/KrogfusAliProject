@@ -4,7 +4,7 @@
 # Final Project
 # Description: Runs specification tests for the Banking DSL. All tests execute commands
 # through the Lexer, Parser and Evaluator to test functionality of the banking DSL. Tests
-# include: balance verificatoin after deposits and withdrawals, invalid account lookup, and
+# include: balance verification after deposits and withdrawals, invalid account lookup, and
 # creating account. Account RED BULL RB052026 is created and written to the file. Then
 # removed after testing.
 
